@@ -2,6 +2,8 @@ let droplist = document.querySelectorAll(".drop-list select");
 let fromCurrency = document.querySelector(".from select");
 let toCurrency = document.querySelector(".to select");
 let getButton = document.querySelector("form button");
+let apiKEY = "994bfffefb7329ff74c36d13";
+
 for (let i = 0; i < droplist.length; i++) {
   for (currency_code in country_code) {
     let selected;
@@ -50,12 +52,12 @@ function getExchangeRate() {
     amountVal = 1;
   }
   exchangeRateText.innerText = "Getting exchange rate...";
-  let url =
-    "https://api.currencyfreaks.com/v2.0/rates/latest?apikey=35e17e15d7a544fea0dfa7ceb5d7fc0f";
+  let url = `https://v6.exchangerate-api.com/v6/${apiKEY}/latest/${fromCurrency.value}`;
+
   fetch(url)
     .then((response) => response.json())
     .then((result) => {
-      let exchangeRate = result.rates[toCurrency.value];
+      let exchangeRate = result.conversion_rates[toCurrency.value];
       let totalExchangeRate = (amountVal * exchangeRate).toFixed(2);
 
       exchangeRateText.innerText = `${amountVal} ${fromCurrency.value} = ${totalExchangeRate} ${toCurrency.value}`;
